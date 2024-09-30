@@ -3,10 +3,9 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/IBM/sarama"
+	"github.com/gofiber/fiber"
 	"log"
-
-	"github.com/Shopify/sarama"
-	"github.com/gofiber/fiber/v2"
 )
 
 // Comment struct
@@ -66,7 +65,7 @@ func PushCommentToQueue(topic string, message []byte) error {
 }
 
 // createComment handler
-func createComment(c *fiber.Ctx) error {
+func createComment(c *fiber.Ctx) {
 
 	// Instantiate new Message struct
 	cmt := new(Comment)
@@ -78,7 +77,7 @@ func createComment(c *fiber.Ctx) error {
 			"success": false,
 			"message": err,
 		})
-		return err
+		return
 	}
 	// convert body into bytes and send it to kafka
 	cmtInBytes, err := json.Marshal(cmt)
@@ -95,8 +94,8 @@ func createComment(c *fiber.Ctx) error {
 			"success": false,
 			"message": "Error creating product",
 		})
-		return err
+		return
 	}
 
-	return err
+	return
 }

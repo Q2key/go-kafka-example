@@ -2,11 +2,10 @@ package main
 
 import (
 	"fmt"
+	"github.com/IBM/sarama"
 	"os"
 	"os/signal"
 	"syscall"
-
-	"github.com/Shopify/sarama"
 )
 
 func main() {
